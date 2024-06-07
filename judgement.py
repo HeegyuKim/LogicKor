@@ -16,7 +16,7 @@ time_start = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--model-output', help=' : Model Output File Location', default=None)
-parser.add_argument('-k', '--openai-api-key', help=' : Model', default=os.environ["OPENAI_API_KEY"])
+parser.add_argument('-k', '--openai-api-key', help=' : Model', default=os.environ.get("OPENAI_API_KEY"))
 parser.add_argument('-j', '--judge-model', help=' : Judge Model', default='gpt-4-1106-preview')
 parser.add_argument('-t', '--threads', help=' : Thread count', default=10, type=int)
 args = parser.parse_args()

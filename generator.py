@@ -7,6 +7,7 @@ from vllm import LLM, SamplingParams
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu_devices', help=' : CUDA_VISIBLE_DEVICES', default='0')
 parser.add_argument('--model', help=' : Model to evaluate', default='yanolja/EEVE-Korean-Instruct-2.8B-v1.0')
+parser.add_argument('--revision', help=' : Model Revision to evaluate', default=None)
 parser.add_argument('--template', help=' : Template File Location', default='./templates/template-EEVE.json')
 parser.add_argument('--model_len', help=' : Maximum Model Length', default=4096, type=int)
 args = parser.parse_args()
@@ -22,7 +23,8 @@ llm = LLM(
     model=args.model,
     tensor_parallel_size=gpu_counts,
     max_model_len=int(args.model_len),
-    gpu_memory_utilization=0.95
+    gpu_memory_utilization=0.95,
+    revision=args.revision
 )
 sampling_params = SamplingParams(
     temperature=0,
