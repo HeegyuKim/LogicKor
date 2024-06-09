@@ -32,6 +32,7 @@ client = OpenAI(
 
 df_model_outputs = pd.read_json(args.model_output, lines=True)
 df_judge_template = pd.read_json('judge_template.jsonl', lines=True)
+judge_file = args.model_output.replace('.jsonl', f'_judge_{time_start}.jsonl')
 
 lock = Lock()
 
@@ -99,7 +100,7 @@ def process_item(_, row):
 
     
     with lock:
-        with open(f'judge_{time_start}.jsonl', 'a', encoding='utf-8-sig') as f:
+        with open(judge_file, 'a', encoding='utf-8-sig') as f:
             f.write(json.dumps(row, ensure_ascii=False))
             f.write('\n')
 
