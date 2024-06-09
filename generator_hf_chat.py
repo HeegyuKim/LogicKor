@@ -11,15 +11,16 @@ parser.add_argument('--model', help=' : Model to evaluate', default='yanolja/EEV
 parser.add_argument('--revision', help=' : Model Revision to evaluate', default=None)
 parser.add_argument('--model_len', help=' : Maximum Model Length', default=4096, type=int)
 parser.add_argument('--eos_token', help=' : End of Sentence Token', default=None, type=str)
+# parser.add_argument('--trust_remote_code/--not_trust_remote_code', help=' : Trust remote code?', default=False, type=bool)
 args = parser.parse_args()
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_device
 
-generator = pipeline('text-generation', model=args.model, revision=args.revision, device_map="cuda:0")
+generator = pipeline('text-generation', model=args.model, revision=args.revision, device_map="cuda:0", trust_remote_code=True)
 
 if args.eos_token:
     generator.tokenizer.eos_token = args.eos_token
-    
+
 sampling_params = dict(
     temperature=0,
     top_p=1,
