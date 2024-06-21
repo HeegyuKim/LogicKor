@@ -11,6 +11,7 @@ parser.add_argument('--model', help=' : Model to evaluate', default='yanolja/EEV
 parser.add_argument('--revision', help=' : Model Revision to evaluate', default=None)
 parser.add_argument('--template', help=' : Template File Location', default='./templates/template-EEVE.json')
 parser.add_argument('--model_len', help=' : Maximum Model Length', default=4096, type=int)
+parser.add_argument('--output_dir', help=' : Output Directory', default='./output', type=str)
 args = parser.parse_args()
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_devices
@@ -74,7 +75,7 @@ df_output = pd.DataFrame({
     'references': df_questions['references']
 })
 df_output.to_json(
-    f'{str(args.model).replace("/", "_")}@{args.revision}.jsonl',
+    os.path.join(args.output_dir, f'{str(args.model).replace("/", "_")}@{args.revision}.jsonl'),
     orient='records',
     lines=True,
     force_ascii=False
