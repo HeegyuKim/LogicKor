@@ -11,6 +11,7 @@ parser.add_argument('--model', help=' : Model to evaluate', default='yanolja/EEV
 parser.add_argument('--revision', help=' : Model Revision to evaluate', default=None)
 parser.add_argument('--model_len', help=' : Maximum Model Length', default=4096, type=int)
 parser.add_argument('--eos_token', help=' : End of Sentence Token', default=None, type=str)
+parser.add_argument('--output_dir', help=' : Output Directory', default='./output', type=str)
 # parser.add_argument('--trust_remote_code/--not_trust_remote_code', help=' : Trust remote code?', default=False, type=bool)
 args = parser.parse_args()
 
@@ -74,7 +75,7 @@ df_output = pd.DataFrame({
     'references': df_questions['references']
 })
 df_output.to_json(
-    f'{str(args.model).replace("/", "_")}.jsonl',
+    os.path.join(args.output_dir, f'{str(args.model).replace("/", "_")}@{args.revision}.jsonl'),
     orient='records',
     lines=True,
     force_ascii=False
